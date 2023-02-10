@@ -7,7 +7,7 @@ import Container from "./ContainerComponent.vue";
 
 const router = useRouter();
 
-const isAuthenticated = ref(true);
+const isAuth = ref(false);
 
 const searchUserName = ref("");
 const onSearch = () => {
@@ -32,7 +32,7 @@ const onSearch = () => {
           />
         </div>
         <div class="content">
-          <div class="left-content" v-if="!isAuthenticated">
+          <div class="left-content" v-if="!isAuth">
             <AuthModal :isLogin="true" />
             <AuthModal :isLogin="false" />
           </div>
