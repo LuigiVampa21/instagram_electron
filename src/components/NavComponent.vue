@@ -23,6 +23,10 @@ const onSearch = () => {
 const handleLogout = async () => {
   await userStore.handleLogout();
 };
+
+const goToProfile = () => {
+  router.push(`/profile/${user.value.username}`);
+};
 </script>
 
 

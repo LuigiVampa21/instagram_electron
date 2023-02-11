@@ -2,13 +2,21 @@
 import Container from './ContainerComponent.vue';
 import UserBar from './UserBarComponent.vue';
 import ImageGallery from './ImageGalleryComponent.vue';
+import { ref } from 'vue';
 
+const posts = ref([]);
+
+const addNewPost = post => {
+  posts.value.unshift(post);
+};
 </script>
 
 <template>
   <Container>
     <div class="profile-container" >
       <UserBar 
+      :key="$route.params.username"
+      :addNewPost="addNewPost"
       :username="'Macouille'"
       :userInfo="{
         posts: 0,
@@ -25,13 +33,7 @@ import ImageGallery from './ImageGalleryComponent.vue';
         :updateIsFollowing="updateIsFollowing"
       /> -->
       <!-- <ImageGallery :posts="posts" /> -->
-      <ImageGallery :posts="[
-                              {
-                                id: 1,
-                                image: 'https://thispersondoesnotexist.com/image',
-                              
-                              }
-                            ]" />
+      <ImageGallery :posts="posts" />
     </div>
     <!-- <div class="spinner" v-else>
       <a-spin></a-spin>

@@ -1,24 +1,24 @@
 <script setup>
 import { defineProps } from "vue";
-// import { useRoute } from "vue-router";
-// import { useUserStore } from "../stores/users";
-// import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
+import { useUserStore } from "../stores/userStore";
+import { storeToRefs } from "pinia";
 // import { supabase } from "../supabase";
-// import UploadPhotoModal from "./UploadPhotoModal.vue";
+import UploadPhotoModal from "./UploadPhotoModal.vue";
 
 const props = defineProps([
   // "userFromProfile",
   "username",
   "userInfo",
-  // "addNewPost",
+  "addNewPost",
   // "isFollowing",
   // "updateIsFollowing",
 ]);
-// const route = useRoute();
-// const userStore = useUserStore();
-// const { user } = storeToRefs(userStore);
+const route = useRoute();
+const userStore = useUserStore();
+const { user } = storeToRefs(userStore);
 
-// const { username: profileUsername } = route.params;
+const { username: profileUsername } = route.params;
 // const followUser = async () => {
 //   props.updateIsFollowing(true);
 //   try {
@@ -49,6 +49,7 @@ const props = defineProps([
     <div class="top-content">
       <a-typography-title :level="2">{{ props.username }}</a-typography-title>
 
+      <UploadPhotoModal v-if="user && profileUsername === user.username" :addNewPost="addNewPost"/>
 
       <!-- <a-typography-title :level="2">{{
         props.userFromProfile.username
