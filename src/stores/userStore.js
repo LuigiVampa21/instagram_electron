@@ -8,7 +8,42 @@ export const useUserStore = defineStore("user", () => {
     const errorMessage = ref("");
     const loading = ref(false);
 
-    const handleLogin = () => {}
+    const handleLogin = async credentials => {
+      const { email, password } = credentials;
+  
+      if (!validateEmail(email)) {
+        return (errorMessage.value = "Email is not valid");
+      }
+  
+      if (!password.length) {
+        return (errorMessage.value = "Please provide a password");
+      }
+  
+      loading.value = true;
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        loading.value = false;
+        return (errorMessage.value = error.message);
+      }
+  
+      const { data: userLoggedin } = await supabase
+        .from("users")
+        .select()
+        .eq("email", email)
+        .single();
+  
+      user.value = {
+        id: userLoggedin.id,
+        username: userLoggedin.username,
+        email: userLoggedin.email,
+      };
+      loading.value = false;
+      errorMessage.value = "";
+    };
 
     const handleRegister = async credentials => {
         const { email, password, username } = credentials;
@@ -51,18 +86,19 @@ export const useUserStore = defineStore("user", () => {
           email,
         });
     
-        // const { data: newUser } = await supabase
-        //   .from("users")
-        //   .select()
-        //   .eq("email", email)
-        //   .single();
+        const { data: newUser } = await supabase
+          .from("users")
+          .select()
+          .eq("email", email)
+          .single();
     
-        // user.value = {
-        //   id: newUser.id,
-        //   username: newUser.username,
-        //   email: newUser.email,
-        //   password: newUser,
-        // };
+
+        user.value = {
+          id: newUser.id,
+          username: newUser.username,
+          email: newUser.email,
+          password: newUser,
+        };
     
         loading.value = false;
     }

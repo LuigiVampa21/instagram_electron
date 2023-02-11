@@ -6,8 +6,9 @@ import { useUserStore } from "../stores/userStore";
 const props = defineProps(['isLogin'])
 const userStore = useUserStore();
 
-const { errorMessage, loading } = storeToRefs(userStore);
+const { errorMessage, loading, user } = storeToRefs(userStore);
 
+const title = props.isLogin ? "Login" : "Signup";
 const visible = ref(false);
 const userCredentials = reactive({
     username: "",
@@ -20,16 +21,34 @@ const showModal = () => {
 };
 
 
-const handleOk = () => {
-    userStore.handleRegister(userCredentials)
+const handleOk = async () => {
+    if (props.isLogin) {
+        await userStore.handleLogin({
+            email: userCredentials.email,
+            password: userCredentials.password,
+        })
+    } else {
+        await userStore.handleRegister(userCredentials)
+        if (user.value) {
+            visible.value = false;
+            clearCredentials();
+        }
+    }
 }
 
 const handleCancel = () => {
     visible.value = false;
-    userStore.clearErrorMessage();
+    clearCredentials
 }
 
-const title = props.isLogin ? "Login" : "Signup";
+const clearCredentials = () => {
+    userCredentials.email = "";
+    userCredentials.username = "";
+    userCredentials.password = "";
+    userStore.clearErrorMessage();
+};
+
+
 
 
 </script>
