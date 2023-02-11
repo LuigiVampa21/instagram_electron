@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/userStore";
+import { storeToRefs } from "pinia";
+
 import AuthModal from "./AuthModalComponent.vue";
 import Container from "./ContainerComponent.vue";
 
+const userStore = useUserStore();
+const { user, loadingUser } = storeToRefs(userStore);
 
 const router = useRouter();
-
-const isAuth = ref(false);
 
 const searchUserName = ref("");
 const onSearch = () => {
@@ -31,8 +34,8 @@ const onSearch = () => {
             @search="onSearch"
           />
         </div>
-        <div class="content">
-          <div class="left-content" v-if="!isAuth">
+        <div v-if="!loadingUser" class="content">
+          <div class="left-content" v-if="!user">
             <AuthModal :isLogin="true" />
             <AuthModal :isLogin="false" />
           </div>
