@@ -13,10 +13,15 @@ const { user, loadingUser } = storeToRefs(userStore);
 const router = useRouter();
 
 const searchUserName = ref("");
+
 const onSearch = () => {
   if (!searchUserName.value) return;
   router.push(`/profile/${searchUserName.value}`);
   searchUserName.value = "";
+};
+
+const handleLogout = async () => {
+  await userStore.handleLogout();
 };
 </script>
 

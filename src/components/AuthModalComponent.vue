@@ -8,7 +8,7 @@ const userStore = useUserStore();
 
 const { errorMessage, loading, loadingUser, user } = storeToRefs(userStore);
 
-console.log(loadingUser.value);
+console.log(loadingUser);
 
 const title = props.isLogin ? "Login" : "Signup";
 const visible = ref(false);
@@ -18,9 +18,8 @@ const userCredentials = reactive({
     password: "",
 })
 
-const showModal = async () => {
+const showModal = () => {
     visible.value = true;
-    await userStore.getUser();
 };
 
 
