@@ -7,8 +7,7 @@ import { storeToRefs } from "pinia";
 import UploadPhotoModal from "./UploadPhotoModal.vue";
 
 const props = defineProps([
-  // "userFromProfile",
-  "username",
+  "userFromProfile",
   "userInfo",
   "addNewPost",
   // "isFollowing",
@@ -44,10 +43,13 @@ const { username: profileUsername } = route.params;
 // };
 </script>
 <template>
-  <!-- <div class="userbar-container" v-if="props.userFromProfile"> -->
-  <div class="userbar-container">
+  <div class="userbar-container" v-if="props.userFromProfile">
+  <!-- <div class="userbar-container"> -->
     <div class="top-content">
-      <a-typography-title :level="2">{{ props.username }}</a-typography-title>
+      <a-typography-title :level="2">{{
+        props.userFromProfile?.username
+      }}  
+    </a-typography-title>
 
       <UploadPhotoModal v-if="user && profileUsername === user.username" :addNewPost="addNewPost"/>
 
@@ -79,15 +81,15 @@ const { username: profileUsername } = route.params;
       >
       <a-typography-title :level="5"
         >{{ userInfo.following }} following</a-typography-title
-      >
+      >-->
     </div>
   </div>
   <div class="userbar-container" v-else>
     <div class="top-content">
       <a-typography-title :level="2">User Not Found</a-typography-title>
-    </div> -->
+    </div> 
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <style scoped>

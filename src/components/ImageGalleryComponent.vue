@@ -12,7 +12,7 @@ const props = defineProps(["posts"]);
       v-for="post in props.posts"
       :key="post.id"
       :src="
-        'https://asrzzlvqkekqzclcnjcj.supabase.co/storage/v1/object/public/images/' +
+        'https://abtgerrdxzrqwnypntzr.supabase.co/storage/v1/object/public/images/' +
         post.url
       "
     />
