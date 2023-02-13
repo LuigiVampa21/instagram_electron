@@ -3,57 +3,62 @@ import { defineProps } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "../stores/userStore";
 import { storeToRefs } from "pinia";
-// import { supabase } from "../supabase";
+import { supabase } from "../supabase/supabase";
 import UploadPhotoModal from "./UploadPhotoModal.vue";
 
 const props = defineProps([
   "userFromProfile",
   "userInfo",
   "addNewPost",
-  // "isFollowing",
-  // "updateIsFollowing",
+  "isFollowing",
+  "updateIsFollowing",
 ]);
 const route = useRoute();
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
 const { username: profileUsername } = route.params;
-// const followUser = async () => {
-//   props.updateIsFollowing(true);
-//   try {
-//     await supabase.from("followers_following").insert({
-//       follower_id: user.value.id,
-//       following_id: props.userFromProfile.id,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-// const unFollowUser = async () => {
-//   props.updateIsFollowing(false);
-//   try {
-//     await supabase
-//       .from("followers_following")
-//       .delete()
-//       .eq("follower_id", user.value.id)
-//       .eq("following_id", props.userFromProfile.id);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
+
+const followUser = async () => {
+  props.updateIsFollowing(true);
+  try {
+    await supabase.from("followers_following").insert({
+      follower_id: user.value.id,
+      following_id: props.userFromProfile.id,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const unFollowUser = async () => {
+  props.updateIsFollowing(false);
+  try {
+    await supabase
+      .from("followers_following")
+      .delete()
+      .eq("follower_id", user.value.id)
+      .eq("following_id", props.userFromProfile.id);
+  } catch (err) {
+    console.error(err);
+  }
+};
 </script>
 <template>
   <div class="userbar-container" v-if="props.userFromProfile">
-  <!-- <div class="userbar-container"> -->
     <div class="top-content">
-      <a-typography-title :level="2">{{
+      <!-- <a-typography-title :level="2">{{
         props.userFromProfile?.username
       }}  
     </a-typography-title>
 
-      <UploadPhotoModal v-if="user && profileUsername === user.username" :addNewPost="addNewPost"/>
+      <div v-if="user">
+        <UploadPhotoModal v-if="profileUsername === user.username" :addNewPost="addNewPost"/>
+          <a-button v-else @click="followUser">Follow</a-button>
+      </div>
+    </div> -->
 
-      <!-- <a-typography-title :level="2">{{
+      <a-typography-title :level="2">{{
         props.userFromProfile.username
       }}</a-typography-title>
       <div v-if="user">
@@ -67,7 +72,7 @@ const { username: profileUsername } = route.params;
         <div v-else @click="unFollowUser">
           <a-button>Unfollow</a-button>
         </div>
-      </div> -->
+      </div>
     </div>
     <div class="bottom-content">
       <a-typography-title :level="5">{{ props.userInfo.posts }} Posts</a-typography-title>
