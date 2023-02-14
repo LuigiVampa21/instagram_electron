@@ -1,9 +1,9 @@
 <script setup>
 import { defineProps } from "vue";
-// import { ref } from "vue";
-// import config from "../../config";
+import config from "../../config";
 const props = defineProps(["posts"]);
-// const bucketUrl = ref(config.SUPABASE_BUCKET_URL);
+
+const {base_photo_url} = config
 </script>
 
 <template>
@@ -11,10 +11,7 @@ const props = defineProps(["posts"]);
     <img
       v-for="post in props.posts"
       :key="post.id"
-      :src="
-        'https://abtgerrdxzrqwnypntzr.supabase.co/storage/v1/object/public/images/' +
-        post.url
-      "
+      :src="base_photo_url + post.url"
     />
   </div>
 </template>

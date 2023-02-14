@@ -47,17 +47,6 @@ const unFollowUser = async () => {
 <template>
   <div class="userbar-container" v-if="props.userFromProfile">
     <div class="top-content">
-      <!-- <a-typography-title :level="2">{{
-        props.userFromProfile?.username
-      }}  
-    </a-typography-title>
-
-      <div v-if="user">
-        <UploadPhotoModal v-if="profileUsername === user.username" :addNewPost="addNewPost"/>
-          <a-button v-else @click="followUser">Follow</a-button>
-      </div>
-    </div> -->
-
       <a-typography-title :level="2">{{
         props.userFromProfile.username
       }}</a-typography-title>
@@ -78,15 +67,6 @@ const unFollowUser = async () => {
       <a-typography-title :level="5">{{ props.userInfo.posts }} Posts</a-typography-title>
       <a-typography-title :level="5">{{ props.userInfo.followers }} Followers</a-typography-title>
       <a-typography-title :level="5">{{ props.userInfo.following }} Following</a-typography-title>
-      <!-- <a-typography-title :level="5"
-        >{{ userInfo.posts }} post</a-typography-title
-      >
-      <a-typography-title :level="5"
-        >{{ userInfo.followers }} followers</a-typography-title
-      >
-      <a-typography-title :level="5"
-        >{{ userInfo.following }} following</a-typography-title
-      >-->
     </div>
   </div>
   <div class="userbar-container" v-else>
@@ -94,7 +74,6 @@ const unFollowUser = async () => {
       <a-typography-title :level="2">User Not Found</a-typography-title>
     </div> 
     </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>
@@ -115,14 +94,10 @@ const unFollowUser = async () => {
   align-items: center;
 }
 
-.top-content h2 {
-  /* color: white; */
-}
 
 .bottom-content h5 {
   margin: 0 !important;
   padding: 0;
   margin-right: 30px !important;
-  /* color: white; */
 }
 </style>
